@@ -1,0 +1,19 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use 5.12.0;
+
+my $username;
+
+while (1) {
+
+    print "Enter username: ";
+    chomp ( $username = <STDIN> );
+
+    if ( defined( getpwnam( $username ))) {
+        print "\n\nUsername already exists\n\n";
+        next;
+    }
+}
+
