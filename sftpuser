@@ -4,16 +4,20 @@ use warnings;
 use strict;
 use 5.12.0;
 
-my $username;
+use Getopt::Long;
 
-while (1) {
+my ( $user, $pass, $group, $home );
 
-    print "Enter username: ";
-    chomp ( $username = <STDIN> );
+my $args = GetOptions (
+                    "user|u=s"  => \$user,
+                    "pass|p=s"  => \$pass,
+                    "group|g=s" => \$group,
+                    "home|h=s"  => \$home,
+                );
 
-    if ( defined( getpwnam( $username ))) {
-        print "\n\nUsername already exists\n\n";
-        next;
-    }
+if ( defined( getpwnam( $user ))) {
+    print "\n\nUser $user already exists... exiting.\n\n";
+    exit;
 }
+
 
