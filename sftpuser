@@ -8,11 +8,10 @@ use Getopt::Long;
 
 my $user;
 my $pass;
-my $group = "sftp-only";
+my $group = 'sftp-only';
 my $home;
 my $name;
 my $shell = '/sbin/nologin';
-my $cmd = 'pw useradd';
 
 my $args = GetOptions (
                     "user|u=s"  => \$user,
@@ -52,8 +51,7 @@ if ( ! $pass ) {
 
 say $pass;
 
-system( "$cmd -n $user -c '$name' -s $shell -g $group" );
-
+system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group" );
 
 sub random_pass {
 
