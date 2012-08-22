@@ -12,7 +12,7 @@ my $group = "sftp-only";
 my $home;
 my $name;
 my $shell = '/sbin/nologin';
-my $cmd = 'useradd';
+my $cmd = 'pw useradd';
 
 my $args = GetOptions (
                     "user|u=s"  => \$user,
