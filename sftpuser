@@ -57,7 +57,7 @@ system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0" )
 
 # create and own the chroot 
 
-chown 'root', $group, $home;
+system ( "chown root:$group $home;
 mkdir "$home/$data";
 
 sub random_pass {
