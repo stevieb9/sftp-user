@@ -53,7 +53,7 @@ if ( ! $pass ) {
 
 say $pass;
 
-system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0" );
+system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0" -d $home );
 
 # create and own the chroot 
 
