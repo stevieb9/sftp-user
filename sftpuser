@@ -10,13 +10,17 @@ my $user;
 my $pass;
 my $group = "sftp-only";
 my $home;
+my $name;
+my $shell = "/bin/csh";
 
 my $args = GetOptions (
                     "user|u=s"  => \$user,
                     "pass|p=s"  => \$pass,
                     "group|g=s" => \$group,
                     "home|h=s"  => \$home,
-                );
+                    "name|n=s"  => \$name,
+                    "shell|s=s" => \$shell,
+            );
 
 # check if user exists
 
@@ -25,16 +29,29 @@ if ( defined( getpwnam( $user ))) {
     exit;
 }
 
-# build home directory
+# let's check for args
 
-$home = "/usr/home/$user";
+# user's real name... if not supplied, we'll show that
 
-# check if user wants random pass, and assign random if not
+$name = "not supplied" if ! $name;
+
+# home directory
+
+if ( ! $home ) {
+    $home = home_dir();
+}
+
+# random pass if not supplied on cli
 
 if ( ! $pass ) {
     $pass = random_pass();
 }
 
+# add the user
+
+system( "useradd -c $name -p $pass -g $group -m $home -N -s $shell $user" );
+
+say $pass;
 
 sub random_pass {
 
@@ -49,4 +66,10 @@ sub random_pass {
     for ( 1..$length) {
         $pass .= $valid[ int( rand( @valid )) ];
     }
+    return $pass;
+}
+sub home_dir {
+
+    $home = "/usr/home/$user";
+    return $home;
 }
