@@ -12,6 +12,7 @@ my $group = 'sftp-only';
 my $home;
 my $name;
 my $shell = '/sbin/nologin';
+my $data  = 'data';
 
 my $args = GetOptions (
                     "user|u=s"  => \$user,
@@ -20,6 +21,7 @@ my $args = GetOptions (
                     "home|h=s"  => \$home,
                     "name|n=s"  => \$name,
                     "shell|s=s" => \$shell,
+                    "data|d=s"  => \$data,
             );
 
 # check if user exists
@@ -52,6 +54,11 @@ if ( ! $pass ) {
 say $pass;
 
 system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0" );
+
+# create and own the chroot 
+
+chown 'root', $group, $home;
+mkdir "$home/$data";
 
 sub random_pass {
 
