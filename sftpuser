@@ -57,7 +57,7 @@ if ( ! $pass ) {
 
 # add the user
 
-system( "$cmd -c $name -p $pass -g $group -m $home -N -s $shell $user" );
+system( "$cmd -c $name -p $pass -g $group -m $home -n $user -s $shell" );
 
 say $pass;
 
