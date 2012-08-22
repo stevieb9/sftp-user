@@ -59,7 +59,7 @@ if ( ! $pass ) {
 
 say $pass;
 
-system( "$cmd -n $user -c $name -s $shell -g $group );
+system( "$cmd -n $user -c $name -s $shell -g $group" );
 
 
 sub random_pass {
