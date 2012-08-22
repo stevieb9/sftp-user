@@ -57,6 +57,7 @@ print "\n\nUser $user created. Note their password: $pass\n\n";
 
 # create and own the chroot 
 
+mkdir "$home";
 system( "chown root:$group $home" );
 mkdir "$home/$data";
 system( "chown -R $user $home/$data" );
