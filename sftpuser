@@ -12,6 +12,7 @@ my $group = "sftp-only";
 my $home;
 my $name;
 my $shell;
+my $cmd = 'useradd';
 
 my $args = GetOptions (
                     "user|u=s"  => \$user,
@@ -35,6 +36,7 @@ if ( defined( getpwnam( $user ))) {
 
 if ( $^O eq 'freebsd' ){
     $shell = 'nologin';
+    $cmd   = 'pw useradd';
 }
 
 # user's real name... if not supplied, we'll show that
@@ -55,7 +57,7 @@ if ( ! $pass ) {
 
 # add the user
 
-system( "useradd -c $name -p $pass -g $group -m $home -N -s $shell $user" );
+system( "$cmd -c $name -p $pass -g $group -m $home -N -s $shell $user" );
 
 say $pass;
 
