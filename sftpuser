@@ -11,7 +11,7 @@ my $pass;
 my $group = "sftp-only";
 my $home;
 my $name;
-my $shell = "/bin/csh";
+my $shell;
 
 my $args = GetOptions (
                     "user|u=s"  => \$user,
@@ -30,6 +30,12 @@ if ( defined( getpwnam( $user ))) {
 }
 
 # let's check for args
+
+# check OS
+
+if ( $^O eq 'freebsd' ){
+    $shell = 'nologin';
+}
 
 # user's real name... if not supplied, we'll show that
 
