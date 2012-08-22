@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+!/usr/bin/perl
 
 use warnings;
 use strict;
@@ -11,7 +11,7 @@ my $pass;
 my $group = "sftp-only";
 my $home;
 my $name;
-my $shell;
+my $shell = '/sbin/nologin';
 my $cmd = 'useradd';
 
 my $args = GetOptions (
@@ -31,13 +31,6 @@ if ( defined( getpwnam( $user ))) {
 }
 
 # let's check for args
-
-# check OS
-
-if ( $^O eq 'freebsd' ){
-    $shell = 'nologin';
-    $cmd   = 'pw useradd';
-}
 
 # user's real name... if not supplied, we'll show that
 
@@ -59,7 +52,7 @@ if ( ! $pass ) {
 
 say $pass;
 
-system( "$cmd -n $user -c $name -s $shell -g $group" );
+system( "$cmd -n $user -c '$name' -s $shell -g $group" );
 
 
 sub random_pass {
