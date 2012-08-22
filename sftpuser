@@ -60,6 +60,8 @@ system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0 -m
 system( "chown root:$group $home" );
 mkdir "$home/$data";
 system( "chown -R $user $home/$data" );
+system( "rm $home/.*" );
+
 sub random_pass {
 
     my @valid;
