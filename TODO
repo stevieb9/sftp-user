@@ -1,9 +1,5 @@
 20120821
-- add check for os (linux doesn't use pw, FBSD does)
-- linux has 'nologin' shell (see above)
--- fix for fbsd check
-- fix name not supplied issue
-- add password change command after initial useradd
-- add dir additions and perm changes
-- update: group does work!
 - stop script from saying finished when nothing is input!
+- consolodate all arg checks
+- fix global args and put into dispatch table
+- get rid of the damn system calls :)
