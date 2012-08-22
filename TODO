@@ -5,3 +5,4 @@
 - fix name not supplied issue
 - add password change command after initial useradd
 - add dir additions and perm changes
+- update: group does work!
