@@ -57,9 +57,10 @@ if ( ! $pass ) {
 
 # add the user
 
+say $pass;
+
 system( "$cmd $user -c $name -p $pass -g $group -m $home -N -s $shell" );
 
-say $pass;
 
 sub random_pass {
 
