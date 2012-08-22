@@ -1,0 +1,7 @@
+20120821
+- add check for os (linux doesn't use pw, FBSD does)
+- linux has 'nologin' shell (see above)
+-- fix for fbsd check
+- fix name not supplied issue
+- add password change command after initial useradd
+- add dir additions and perm changes
