@@ -25,11 +25,16 @@ if ( defined( getpwnam( $user ))) {
     exit;
 }
 
+# build home directory
+
+$home = "/usr/home/$user";
+
 # check if user wants random pass, and assign random if not
 
 if ( ! $pass ) {
     $pass = random_pass();
 }
+
 
 sub random_pass {
 
