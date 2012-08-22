@@ -51,7 +51,7 @@ if ( ! $pass ) {
 
 say $pass;
 
-system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group" );
+system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0" );
 
 sub random_pass {
 
