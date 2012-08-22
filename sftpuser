@@ -51,7 +51,7 @@ if ( ! $pass ) {
 
 # add the user
 
-system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0 -m" );
+system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0 -d 'data' -m" );
 
 print "\n\nUser $user created. Note their password: $pass\n\n";
 
