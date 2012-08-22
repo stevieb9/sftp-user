@@ -51,16 +51,16 @@ if ( ! $pass ) {
 
 # add the user
 
-exec( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0 -m" );
+system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0 -m" );
 
 print "\n\nUser $user created. Note their password: $pass\n\n";
 
 # create and own the chroot 
 
-exec( "chown root:$group $home" );
+system( "chown root:$group $home" );
 mkdir "$home/$data";
-exec( "chown -R $user $home/$data" );
-exec( "rm $home/.*" );
+system( "chown -R $user $home/$data" );
+system( "rm $home/.*" );
 
 
 sub random_pass {
