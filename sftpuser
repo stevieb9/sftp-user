@@ -60,7 +60,7 @@ print "\n\nUser $user created. Note their password: $pass\n\n";
 system( "chown root:$group $home" );
 mkdir "$home/$data";
 system( "chown -R $user $home/$data" );
-system( "rm $home/.*" );
+system( "rm $home/.* 2>&1" );
 
 
 sub random_pass {
