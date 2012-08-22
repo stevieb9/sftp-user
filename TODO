@@ -6,3 +6,4 @@
 - add password change command after initial useradd
 - add dir additions and perm changes
 - update: group does work!
+- stop script from saying finished when nothing is input!
