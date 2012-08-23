@@ -3,3 +3,4 @@
 - consolodate all arg checks
 - fix global args and put into dispatch table
 - get rid of the damn system calls :)
+- implement rmuser routine to delete the home directory owned by root
