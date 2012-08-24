@@ -1,5 +1,4 @@
 20120821
-- stop script from saying finished when nothing is input!
 - consolodate all arg checks
 - fix global args and put into dispatch table
 - get rid of the damn system calls :)

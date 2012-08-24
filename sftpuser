@@ -26,6 +26,11 @@ my $args = GetOptions (
 
 # check if user exists
 
+if ( ! $user ) {
+    print "\n\nUser not specified... exiting.\n\n";
+    exit;
+}
+
 if ( defined( getpwnam( $user ))) {
     print "\n\nUser $user already exists... exiting.\n\n";
     exit;
