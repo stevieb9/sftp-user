@@ -1,8 +1,4 @@
 20120821
 - consolodate all arg checks
 - fix global args and put into dispatch table
-- get rid of the damn system calls :)
--- use getpwnam to get uid/gid of user
--- use Perl's chown()
--- use Perl's unlink()
 - implement rmuser routine to delete the home directory owned by root

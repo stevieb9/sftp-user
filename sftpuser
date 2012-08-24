@@ -62,12 +62,15 @@ print "\n\nUser $user created. Note their password: $pass\n\n";
 
 # create and own the chroot 
 
-mkdir "$home";
-system( "chown root:$group $home" );
-mkdir "$home/$data";
-system( "chown -R $user $home/$data" );
-system( "rm $home/.* 2>&1" );
+my ( $uid, $gid ) = ( getpwnam( $user ) )[ 2,3 ];
 
+mkdir "$home";
+chown 0, $gid, $home;
+
+mkdir "$home/$data";
+chown $uid, $gid, "$home/$data";
+
+unlink "$home/.*";
 
 sub random_pass {
 
