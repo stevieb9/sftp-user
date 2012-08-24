@@ -56,28 +56,20 @@ if ( ! $pass ) {
 
 # add the user
 
-system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0 -d 'data' -m" );
+system( "echo $pass | pw useradd -n $user -c '$name' -s $shell -g $group -h 0 -d $data -m" );
 
 print "\n\nUser $user created. Note their password: $pass\n\n";
 
 # create and own the chroot 
 
-my ( $uid, $gid ) = ( getpwnam( $user ) )[ 2,3 ];
-
-mkdir "$home";
-chown 0, $gid, $home;
-
-mkdir "$home/$data";
-chown $uid, $gid, "$home/$data";
-
-unlink "$home/.*";
+dir_create( $user, $home, $data );
 
 sub random_pass {
 
     my @valid;
     push @valid, qw( a A b B c C d D e E f F g G h H k K m );
     push @valid, qw( M n N p P r R s S t T w W x X y Y z Z );
-    push @valid, qw( 2 3 4 5 6 7 8 9 );
+    push @valid, qw( 2 3 4 5 6 7 8 9 * ? ! % $ );
 
     my $length = 8;
     my $pass;
@@ -91,4 +83,18 @@ sub home_dir {
 
     $home = "/usr/home/$user";
     return $home;
+}
+sub dir_create {
+    
+    my ( $user, $home, $data ) = @_;
+
+    my ( $uid, $gid ) = ( getpwnam( $user ) )[ 2,3 ];
+
+    mkdir "$home";
+    chown 0, $gid, $home;
+
+    mkdir "$home/$data";
+    chown $uid, $gid, "$home/$data";
+
+    unlink "$home/.*";
 }

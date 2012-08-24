@@ -2,3 +2,4 @@
 - consolodate all arg checks
 - fix global args and put into dispatch table
 - implement rmuser routine to delete the home directory owned by root
+- POD
