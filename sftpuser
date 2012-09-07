@@ -113,7 +113,7 @@ sub random_pass {
 sub home_dir {
 
     $user = $rmuser if ! $user;
-    $home = "/usr/home/$user";
+    $home = "/home/$user";
     return $home;
 }
 sub dir_create {
