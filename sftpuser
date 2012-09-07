@@ -5,14 +5,14 @@ use strict;
 use 5.12.0;
 
 use Getopt::Long;
+use Pod::Usage;
 
-my $user;
-my $pass;
+my ( $user, $pass, $name );
 my $group = 'sftp-only';
 my $home;
-my $name;
 my $shell = '/sbin/nologin';
 my $data  = 'data';
+my ( $help, $man )  = 0;
 
 my $args = GetOptions (
                     "user|u=s"  => \$user,
@@ -22,7 +22,12 @@ my $args = GetOptions (
                     "name|n=s"  => \$name,
                     "shell|s=s" => \$shell,
                     "data|d=s"  => \$data,
+                    "help|?"    => \$help,
+                    "man|m"     => \$man,
             );
+
+pod2usage({ -verbose => 1 }) if $help;
+pod2usage({ -verbose => 2 }) if $man;
 
 # check if user exists
 
@@ -81,7 +86,7 @@ sub random_pass {
 }
 sub home_dir {
 
-    $home = "/usr/home/$user";
+    $home = "/home/$user";
     return $home;
 }
 sub dir_create {
@@ -98,3 +103,82 @@ sub dir_create {
 
     unlink "$home/.*";
 }
+
+1;
+
+__END__
+
+=head1 NAME
+
+sftpuser - Create chroot-ed SFTP accounts dynamically
+
+=head1 SYNOPSIS
+
+    # basic usage
+
+    sftpuser -u username -p password
+
+=head1 DESCRIPTION
+
+sftpuser configures a new SFTP user on OpenSSH servers that are configured to
+chroot the users.
+
+=head1 OPTIONS
+
+=item --username | -u
+
+Specify the username of the account you want to create.
+
+=item --password | -p
+
+Specify the password for the new user. If this option is omitted, a random
+password will be generated and printed on the screen.
+
+=item --group | -g
+
+Specify the group that locks the new user into the chroot environment. Defaults
+to "sftp-user".
+
+=item --home | -h
+
+Specify the chroot environment's home directory. Defaults to "/home".
+
+=item --name | -n
+
+Optionally specify a real name for the new user.
+
+=item --shell | -s
+
+Specify the shell for the chroot-ed user. Defaults to "/sbin/nologin".
+
+=item --data | -d
+
+Specify the users upload/download directory. This will be created under the user's
+home directory, and upon logging into the system, the user will be dropped into this
+directory by default. Defaults to "data".
+
+=item --help | -?
+
+Prints the command line options along with their description.
+
+=item --man | -m
+
+Prints out the entire sftpuser manual page.
+
+=back
+
+=head1 AUTHOR
+
+Steve Bertrand, E<lt>steveb@cpan.orgE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2012 by Steve Bertrand
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.12.4 or,
+at your option, any later version of Perl 5 you may have available.
+
+
+=cut
+
