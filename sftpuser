@@ -32,8 +32,8 @@ pod2usage({ -verbose => 2 }) if $man;
 # check if user exists
 
 if ( ! $user ) {
-    print "\n\nUser not specified... exiting.\n\n";
-    exit;
+    print "\n\nUsage information:\n\n";
+    pod2usage({ -verbose => 1 });
 }
 
 if ( defined( getpwnam( $user ))) {
