@@ -71,9 +71,16 @@ if ( $rmuser ) {
         exit;
     }
 
-    system( "pw userdel -n $rmuser && rm -r $home" );
+    print "\n\nThis will delete user $rmuser. Are you sure you want to continue? [y/N]: ";
+    my $delete = <STDIN>;
 
-    print "\n\nUser $rmuser deleted.\n\n";
+    if ( $delete =~ /y/i ){
+        system( "pw userdel -n $rmuser && rm -r $home" );
+        print "\n\nUser $rmuser deleted.\n\n";
+    }
+    else {
+        print "\n\nNo users deleted\n\n";
+    }
     exit;
 }
 
