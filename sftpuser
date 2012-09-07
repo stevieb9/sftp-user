@@ -10,33 +10,37 @@ use Pod::Usage;
 my ( $user, $pass, $name );
 my $group = 'sftp-only';
 my $home;
+my $rmuser;
 my $shell = '/sbin/nologin';
 my $data  = 'data';
 my ( $help, $man )  = 0;
 
 my $args = GetOptions (
-                    "user|u=s"  => \$user,
-                    "pass|p=s"  => \$pass,
-                    "group|g=s" => \$group,
-                    "home|h=s"  => \$home,
-                    "name|n=s"  => \$name,
-                    "shell|s=s" => \$shell,
-                    "data|d=s"  => \$data,
-                    "help|?"    => \$help,
-                    "man|m"     => \$man,
+                    "user|u=s"   => \$user,
+                    "pass|p=s"   => \$pass,
+                    "group|g=s"  => \$group,
+                    "home|h=s"   => \$home,
+                    "name|n=s"   => \$name,
+                    "shell|s=s"  => \$shell,
+                    "data|d=s"   => \$data,
+                    "help|?"     => \$help,
+                    "man|m"      => \$man,
+                    "rmuser|r=s" => \$rmuser,
             );
+
+# dump the help screens
 
 pod2usage({ -verbose => 1 }) if $help;
 pod2usage({ -verbose => 2 }) if $man;
 
-# check if user exists
+# see if anything was supplied on cli
 
-if ( ! $user ) {
+if ( ! $user && ! $rmuser ) {
     print "\n\nUsage information:\n\n";
     pod2usage({ -verbose => 1 });
 }
 
-if ( defined( getpwnam( $user ))) {
+if ( ! $rmuser && defined( getpwnam( $user ))) {
     print "\n\nUser $user already exists... exiting.\n\n";
     exit;
 }
@@ -58,6 +62,21 @@ if ( ! $home ) {
 if ( ! $pass ) {
     $pass = random_pass();
 }
+
+# delete a user
+
+if ( $rmuser ) {
+    if ( ! defined( getpwnam( $rmuser ))){
+        print "\n\nUser $rmuser doesn't exist, can't be deleted... exiting.\n\n";
+        exit;
+    }
+
+    system( "pw userdel -n $rmuser && rm -r $home" );
+
+    print "\n\nUser $rmuser deleted.\n\n";
+    exit;
+}
+
 
 # add the user
 
@@ -86,7 +105,8 @@ sub random_pass {
 }
 sub home_dir {
 
-    $home = "/home/$user";
+    $user = $rmuser if ! $user;
+    $home = "/usr/home/$user";
     return $home;
 }
 sub dir_create {
@@ -117,6 +137,10 @@ sftpuser - Create chroot-ed SFTP accounts dynamically
     # basic usage
 
     sftpuser -u username -p password
+
+    # delete a user
+
+    sftpuser -r username
 
 =head1 DESCRIPTION
 
@@ -156,6 +180,10 @@ Specify the shell for the chroot-ed user. Defaults to "/sbin/nologin".
 Specify the users upload/download directory. This will be created under the user's
 home directory, and upon logging into the system, the user will be dropped into this
 directory by default. Defaults to "data".
+
+=item --rmuser | -r
+
+Specify a user that you want to delete. All of the user's data will be lost.
 
 =item --help | -?
 
